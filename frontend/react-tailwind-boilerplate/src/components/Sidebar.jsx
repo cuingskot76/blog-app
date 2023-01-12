@@ -1,7 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-const Home = () => {
+const Sidebar = ({ img, userDesc, followers, writter }) => {
+  // create total follower if it is more than 1 to "followers" else "follower"
+  const totalFollower = [];
+
+  if (followers > 1000) {
+    totalFollower.push(<p>{(followers / 1000).toFixed(1) + " K Followers"}</p>);
+  } else if (followers > 1) {
+    totalFollower.push(<p>{followers + " Followers"}</p>);
+  } else {
+    totalFollower.push(<p>{followers + " Follower"}</p>);
+  }
+
   const pages = [
     {
       id: 1,
@@ -36,8 +46,20 @@ const Home = () => {
   ];
 
   return (
-    <div className="">
-      <div className="flex flex-col mt-5">
+    <div className="bg-[#1E293B] max-w-md h-screen fixed top-[5rem] right-0 z-1">
+      <div className="max-w-[7rem]">
+        <img src={img} alt="user-img" className="rounded-full bg-cover" />
+      </div>
+      <div className="my-3">
+        <p>{writter}</p>
+        {totalFollower}
+      </div>
+      <p>{userDesc}</p>
+      <div>
+        <button className="btn btn-success mt-3">Follow</button>
+      </div>
+      <div>
+        <h2 className="font-bold text-xl my-5">Other Posts you may like</h2>
         {pages.map((page, i) => (
           <div
             key={i}
@@ -63,16 +85,6 @@ const Home = () => {
                   ? page.subTitle.substring(0, 50) + "..."
                   : page.subTitle}
               </p>
-              <div className="mt-2">
-                <span className="text-gray-400">{page.date}</span>
-                <span className="text-gray-400 mx-2">•</span>
-                <span className="text-gray-400">{page.read}</span>
-              </div>
-              <Link to={`post/${i + 1}`}>
-                <button className="btn btn-outline btn-info mt-5">
-                  Read more
-                </button>
-              </Link>
             </div>
           </div>
         ))}
@@ -81,4 +93,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Sidebar;

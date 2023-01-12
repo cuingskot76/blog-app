@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100 sm:px-10 md:px-16 lg:px-28 xl:px-36">
+    <div className="navbar sm:px-10 md:px-16 lg:px-28 xl:px-36">
       <div className="navbar-start md:navbar-center">
-        <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+        <Link to="/">
+          <button className="btn btn-ghost normal-case text-xl">cNg</button>
+        </Link>
       </div>
       <div className="navbar-end md:hidden">
         <div className="dropdown ">

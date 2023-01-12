@@ -4,6 +4,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className=" px-[2rem] sm:px-[4rem] overflow-x-hidden">
+    <div className="h-[2000px] px-[2rem] overflow-x-hidden sm:px-[4rem] ">
       <RouterProvider router={router} />
     </div>
   );
