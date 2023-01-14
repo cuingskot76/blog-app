@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/useContext";
 
 const Navbar = () => {
+  const { currentUser, logout } = useContext(AuthContext);
+  // console.log(currentUser);
   return (
     <div className="navbar sm:px-10 md:px-16 lg:px-28 xl:px-36">
       <div className="navbar-start md:navbar-center">
@@ -35,7 +38,9 @@ const Navbar = () => {
               <a>Home</a>
             </li>
             <li>
-              <a>Item 3</a>
+              {currentUser?.firstName ? (
+                <a>Welcome back, {currentUser?.firstName}</a>
+              ) : null}
             </li>
           </ul>
         </div>
@@ -47,19 +52,31 @@ const Navbar = () => {
             <a>Home</a>
           </li>
           <li>
-            <a></a>
+            {currentUser?.firstName ? (
+              <a>Welcome back, {currentUser?.firstName}</a>
+            ) : null}
           </li>
         </ul>
       </div>
       <div className="navbar-end hidden md:block">
-        <Link to="/login">
-          <button className="btn btn-info">Login</button>
-        </Link>
+        {currentUser?.firstName ? null : (
+          <Link to="/login">
+            <button className="btn btn-info">Login</button>
+          </Link>
+        )}
       </div>
       <div className="navbar-end hidden md:block">
-        <Link to="/signup">
-          <button className="btn btn-outline btn-info">Sign Up</button>
-        </Link>
+        {currentUser ? (
+          <Link to="/login">
+            <button className="btn btn-outline btn-info" onClick={logout}>
+              Logout
+            </button>
+          </Link>
+        ) : (
+          <Link to="/signup">
+            <button className="btn btn-outline btn-info">Sign Up</button>
+          </Link>
+        )}
       </div>
     </div>
   );
