@@ -35,11 +35,33 @@ const Navbar = () => {
             className="menu menu-compact  dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Home</a>
+              <Link to="/?cat=programming">
+                <span>Programming</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/?cat=technology">
+                <span>Technology</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/?cat=writing">
+                <span>Writing</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/?cat=productivity">
+                <span>Productivity</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/?cat=politics">
+                <span>Politics</span>
+              </Link>
             </li>
             <li>
               {currentUser?.firstName ? (
-                <a>Welcome back, {currentUser?.firstName}</a>
+                <span>Welcome back, {currentUser?.firstName}</span>
               ) : null}
             </li>
           </ul>
@@ -49,11 +71,33 @@ const Navbar = () => {
       <div className="navbar-end hidden md:flex ">
         <ul className="menu menu-horizontal px-5">
           <li>
-            <a>Home</a>
+            <Link to="/?cat=programming">
+              <span>Programming</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/?cat=technology">
+              <span>Technology</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/?cat=writing">
+              <span>Writing</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/?cat=productivity">
+              <span>Productivity</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/?cat=politics">
+              <span>Politics</span>
+            </Link>
           </li>
           <li>
             {currentUser?.firstName ? (
-              <a>Welcome back, {currentUser?.firstName}</a>
+              <span>Welcome back, {currentUser?.firstName}</span>
             ) : null}
           </li>
         </ul>
