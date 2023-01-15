@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/useContext";
 import { DateTime } from "luxon";
 import axios from "axios";
@@ -13,6 +13,7 @@ const Page = () => {
   const postId = location.pathname.split("/")[2];
 
   const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -40,23 +41,15 @@ const Page = () => {
   //   ? `${(readTime = getWord / readingSpeed)} sec read `
   //   : (readTime = getWord * readingSpeed);
 
-  // console.log(readTime);
+  const handleDeletePost = async () => {
+    try {
+      await axios.delete(`http://localhost:8000/api/posts/${postId}`);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // const pages = [
-  //   {
-  //     id: 1,
-  //     title: "lorem ipsum dolor sit amet",
-  //     subTitle: "lorem ipsum dolor sit amet mollis  vivamus conubia",
-  //     desc: "Lorem ipsum dolor sit amet mollis vivamus conubia litora nec placerat convallis sollicitudin mus siasdfasdf",
-  //     img: "https://source.unsplash.com/random/300x300",
-  //     writter: "John Doe",
-  //     userDesc:
-  //       "Lorem ipsum dolor sit amet rhoncus luctus porta tristique cubilia cursus consequat sapien duis montes ac inceptos finibus at eleifend volutpat quam lacus posuere ",
-  //     followers: 1234,
-  //     date: "Jan 1, 2023",
-  //     read: "2 min read",
-  //   },
-  // ];
   return (
     <div className="mt-5">
       <div className="flex justify-between">
@@ -88,8 +81,14 @@ const Page = () => {
               // if the user is logged in and the user is the owner of the post
               currentUser?.email === post?.email ? (
                 <>
-                  <FontAwesomeIcon icon={faPenToSquare} />
-                  <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
+                  <Link to={`/write?edit=${postId}`}>
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </Link>
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    onClick={handleDeletePost}
+                    className="cursor-pointer ml-5"
+                  ></FontAwesomeIcon>
                 </>
               ) : null
             }
@@ -107,9 +106,11 @@ const Page = () => {
             />
           </div>
           <p className="max-w-md">{post?.description}</p>
-          <p className="bg-blue-400 w-fit rounded-md py-1 px-2 mt-5">
-            {post?.cat}
-          </p>
+          {post?.cat ? (
+            <p className="bg-blue-400 w-fit rounded-md py-1 px-2 mt-5">
+              {post?.cat}
+            </p>
+          ) : null}
         </div>
         <div className="hidden lg:block">
           <Sidebar {...post} />

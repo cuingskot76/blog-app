@@ -4,7 +4,9 @@ import { AuthContext } from "../context/useContext";
 
 const Navbar = () => {
   const { currentUser, logout } = useContext(AuthContext);
-  // console.log(currentUser);
+  const firstNameUpper =
+    currentUser?.firstName.charAt(0).toUpperCase() +
+    currentUser?.firstName.slice(1);
   return (
     <div className="navbar sm:px-10 md:px-16 lg:px-28 xl:px-36">
       <div className="navbar-start md:navbar-center">
@@ -97,7 +99,7 @@ const Navbar = () => {
           </li>
           <li>
             {currentUser?.firstName ? (
-              <span>Welcome back, {currentUser?.firstName}</span>
+              <span>Welcome back, {firstNameUpper}</span>
             ) : null}
           </li>
         </ul>
