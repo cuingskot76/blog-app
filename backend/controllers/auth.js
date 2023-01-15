@@ -47,7 +47,8 @@ export const login = (req, res) => {
 
     if (!validPassword) return res.status(401).json("Invalid password");
 
-    const token = jwt.sign({ id: data[0].id }, "jwtkey");
+    // "jwtkey" = nama tokennya
+    const token = jwt.sign({ id: data[0]?.id }, "jwtkey");
     const { password, ...other } = data[0];
 
     // return res.status(200).json("Login successfully");
