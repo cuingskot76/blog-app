@@ -13,6 +13,7 @@ const Page = () => {
   const postId = location.pathname.split("/")[2];
 
   const { currentUser } = useContext(AuthContext);
+  // console.log(currentUser);
   const navigate = useNavigate();
 
   useEffect(() => {

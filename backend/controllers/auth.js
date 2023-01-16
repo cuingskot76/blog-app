@@ -48,13 +48,19 @@ export const login = (req, res) => {
     if (!validPassword) return res.status(401).json("Invalid password");
 
     // "jwtkey" = nama tokennya
-    const token = jwt.sign({ id: data[0]?.id }, "jwtkey");
+    const token = jwt.sign({ id: data[0].id }, "jwtkey", {
+      expiresIn: "1h",
+    });
+
     const { password, ...other } = data[0];
 
+    console.log(data[0].id);
     // return res.status(200).json("Login successfully");
+    // create cookie with token
     res
       .cookie("access_token", token, {
-        httpOnly: true,
+        sameSite: "none",
+        secure: true,
       })
       .status(200)
       .json(other);
