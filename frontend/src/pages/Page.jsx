@@ -42,9 +42,13 @@ const Page = () => {
   //   ? `${(readTime = getWord / readingSpeed)} sec read `
   //   : (readTime = getWord * readingSpeed);
 
+  // get cookie from user login
+
   const handleDeletePost = async () => {
     try {
+      // await axios.delete(`http://localhost:8000/api/posts/${postId}`);
       await axios.delete(`http://localhost:8000/api/posts/${postId}`);
+      // setPost(res?.data);
       navigate("/");
     } catch (error) {
       console.log(error);

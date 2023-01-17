@@ -7,7 +7,8 @@ import userRoutes from "./routes/users.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
-app.use(cors());
+
+app.use(cors({ credentials: true }));
 
 app.use(express.json());
 app.use(cookieParser());

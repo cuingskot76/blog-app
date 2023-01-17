@@ -53,14 +53,14 @@ export const login = (req, res) => {
     });
 
     const { password, ...other } = data[0];
-
-    console.log(data[0].id);
+    // get token and other
+    // const values = { token, ...other };
+    // console.log(data[0].id);
     // return res.status(200).json("Login successfully");
     // create cookie with token
     res
       .cookie("access_token", token, {
-        sameSite: "none",
-        secure: true,
+        httpOnly: true,
       })
       .status(200)
       .json(other);
