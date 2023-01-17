@@ -1,0 +1,14 @@
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "a@gmail.com",
+    "password": "1234"
+}
+
+###
+GET http://localhost:8000/api/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJpYXQiOjE2NzM5Njk1OTMsImV4cCI6MTY3Mzk2OTYxM30.JqLX_fmAin0wKoMAaOmx-GpJ5zvmVvz9Ta1nOb97FXg
+
+### 
+GET http://localhost:8000/api/auth/token

@@ -47,27 +47,44 @@ export const login = (req, res) => {
 
     if (!validPassword) return res.status(401).json("Invalid password");
 
-    // "jwtkey" = nama tokennya
-    const token = jwt.sign({ id: data[0].id }, "jwtkey", {
-      expiresIn: "1h",
+    const accessToken = jwt.sign({ id: data[0].id }, "accessTokenKey", {
+      expiresIn: "20s",
     });
 
-    const { password, ...other } = data[0];
-    // get token and other
-    const values = { token, ...other };
-    // console.log(data[0].id);
-    // return res.status(200).json("Login successfully");
-    // create cookie with token
+    const refreshToken = jwt.sign({ id: data[0].id }, "refreshTokenKey", {
+      expiresIn: "1d",
+    });
+
+    // store the refresh token in the database
+    const q = "UPDATE users SET refresh_token = ? WHERE id = ?";
+    db.query(q, [refreshToken, data[0].id], (err, data) => {
+      if (err) return res.status(500).json("Something went wrong");
+      // res.status(200).json("Successfully store the refresh token");
+    });
+
+    // get id, firstName, lastName, email, img from the database
+    const { password, refresh_token, ...user } = data[0];
+
     res
-      .cookie("access_token", token, {
+      .cookie("refreshTokenKey", refreshToken, {
         httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        // sameSite: "none",
+        // secure: true,
       })
-      .status(200)
-      .json([other, token]);
+      .json(user);
   });
 };
 
 export const logout = (req, res) => {
+  // delete the refresh token from the database
+  // const q = "UPDATE users SET refresh_token = ? WHERE id = ?";
+  // console.log(req.body.id);
+  // db.query(q, [null, req.userId], (err, data) => {
+  //   if (err) return res.status(500).json("Something went wrong");
+  //   res.status(200).json("Successfully delete the refresh token");
+  // });
+
   res
     .clearCookie("access_token", {
       sameSite: "none",

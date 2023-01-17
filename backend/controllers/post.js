@@ -6,9 +6,15 @@ export const getPosts = (req, res) => {
   const q = req.query.cat
     ? "SELECT * FROM posts WHERE cat = ?"
     : "SELECT * FROM posts";
+
   //   const q = req.body.cat
   //     ? "SELECT * FROM posts WHERE cat = ?"
   //     : "SELECT * FROM posts";
+
+  // only get posts title, subTitle, img, date, cat, writter, description
+  // const q = req.query.cat
+  //   ? "SELECT title, subTitle, img, date, cat, writter, description FROM posts WHERE cat = ?"
+  //   : "SELECT title, subTitle, img, date, cat, writter, description FROM posts";
 
   // req.query.cat
   db.query(q, [req.query.cat], (err, data) => {
