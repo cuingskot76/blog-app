@@ -5,7 +5,7 @@ import { verify } from "../middleware/verify.js";
 
 const router = express.Router();
 
-router.delete("/:id", deletePost);
+router.delete("/:id", verify, deletePost);
 router.get("/", getPosts);
 router.get("/:id", getPost);
 

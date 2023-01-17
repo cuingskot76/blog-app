@@ -34,21 +34,13 @@ export const deletePost = (req, res) => {
   // const decoded = jwt.verify(token, "jwtkey");
   // const userId = decoded.id;
 
-  const postId = req.params.id;
-  const q = "DELETE FROM posts WHERE id = ? ";
-
-  db.query(q, [postId], (err, data) => {
-    if (err) return res.status(403).json("You can delete only your post");
-    return res.status(200).json("Post deleted");
-  });
-
   // !bener
-  // const q = "DELETE FROM posts WHERE id = ?";
+  const q = "DELETE FROM posts WHERE id = ?";
 
-  // db.query(q, [req.params.id], (err, data) => {
-  //   if (err) return res.json(err);
-  //   return res.status(200).json("Post deleted successfully");
-  // });
+  db.query(q, [req.params.id], (err, data) => {
+    if (err) return res.json(err);
+    return res.status(200).json("Post deleted successfully");
+  });
 
   // const token = req.cookies.access_token;
   // if (!token) return res.status(401).json("Unauthorized");

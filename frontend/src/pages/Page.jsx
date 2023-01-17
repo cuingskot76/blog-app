@@ -12,7 +12,7 @@ const Page = () => {
   const location = useLocation();
   const postId = location.pathname.split("/")[2];
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, token } = useContext(AuthContext);
   // console.log(currentUser);
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ const Page = () => {
 
   // get date from the post "some time ago" with luxon
   const date = DateTime.fromISO(post?.date).toRelative();
-
+  console.log(currentUser);
   // get the read time from the post
   // let readTime = 0;
   // const readingSpeed = 200;
@@ -42,12 +42,15 @@ const Page = () => {
   //   ? `${(readTime = getWord / readingSpeed)} sec read `
   //   : (readTime = getWord * readingSpeed);
 
-  // get cookie from user login
-
+  // get cookie from user when user login
   const handleDeletePost = async () => {
     try {
       // await axios.delete(`http://localhost:8000/api/posts/${postId}`);
-      await axios.delete(`http://localhost:8000/api/posts/${postId}`);
+      await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       // setPost(res?.data);
       navigate("/");
     } catch (error) {
