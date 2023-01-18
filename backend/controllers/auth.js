@@ -36,7 +36,6 @@ export const login = (req, res) => {
 
   db.query(q, [req.body.email], (err, data) => {
     if (err) return res.json(err);
-    // if (!data.length) return res.status(404).json("Email not found");
     if (data.length === 0) return res.status(404).json("Email not found");
 
     // compare the user password
@@ -58,24 +57,17 @@ export const login = (req, res) => {
     // refresh_token = from database
     const { password, refresh_token, ...user } = data[0];
     const newUser = { ...user, accessToken, refreshToken };
-    // const { password, refresh_token, ...user } = data[0];
-    // const newUser = { ...user, accessToken };
 
     // store the refresh token in the database
     const q = "UPDATE users SET refresh_token = ? WHERE id = ?";
     db.query(q, [newUser.refreshToken, data[0].id], (err, data) => {
       if (err) return res.status(500).json("Something went wrong");
-      // res.status(200).json("Successfully store the refresh token");
     });
 
-    // get id, firstName, lastName, email, img from the database
-    console.log(newUser.refreshToken);
     res
       .cookie("accessTokenKey", accessToken, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
-        // sameSite: "none",
-        // secure: true,
       })
       .status(200)
       .json(newUser);
@@ -85,7 +77,7 @@ export const login = (req, res) => {
 export const logout = (req, res) => {
   // delete the refresh token from the database
   const q = "UPDATE users SET refresh_token = ?";
-  console.log(req.body.id, req.userId);
+  // console.log(req.body.id, req.userId);
   db.query(q, [null], (err, data) => {
     if (err) return res.status(500).json("Something went wrong");
     // res.status(200).json("Successfully delete the refresh token");
