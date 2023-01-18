@@ -3,11 +3,10 @@ import jwt from "jsonwebtoken";
 
 export const refreshToken = async (req, res) => {
   try {
-    // const refreshToken = req.cookies.accessTokenKey;
+    const refreshToken = req.cookies.refreshTokenKey;
 
     // ambil refresh token dari body
-    const refreshToken = req.body.token;
-    // console.log(refreshToken);
+    // const refreshToken = req.body.token;
     if (!refreshToken) return res.status(401).json("Unauthorized");
 
     // compare the refresh token with the one in the database

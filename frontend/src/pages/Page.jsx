@@ -7,15 +7,18 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
+import jwt_decode from "jwt-decode";
+
 const Page = () => {
   const [post, setPost] = useState([]);
   const location = useLocation();
   const postId = location.pathname.split("/")[2];
 
-  const { currentUser, token } = useContext(AuthContext);
+  const { currentUser, accessToken, axiosAuth } = useContext(AuthContext);
   // console.log(currentUser);
   const navigate = useNavigate();
 
+  const [token, setToken] = useState("");
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -32,7 +35,7 @@ const Page = () => {
 
   // get date from the post "some time ago" with luxon
   const date = DateTime.fromISO(post?.date).toRelative();
-  console.log(currentUser);
+  // console.log(currentUser);
   // get the read time from the post
   // let readTime = 0;
   // const readingSpeed = 200;
@@ -45,14 +48,24 @@ const Page = () => {
   // get cookie from user when user login
   const handleDeletePost = async () => {
     try {
-      // await axios.delete(`http://localhost:8000/api/posts/${postId}`);
-      await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
+      await axiosAuth.delete(`http://localhost:8000/api/posts/${postId}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
       // setPost(res?.data);
       navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const refreshToken = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/auth/token");
+      setToken(res?.data?.accessToken);
+      const decoded = jwt_decode(res?.data?.accessToken);
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -80,6 +93,7 @@ const Page = () => {
                 <span className="text-gray-400 mx-2">•</span>
                 {/* <span className="text-gray-400">{`${readTime}`}</span> */}
                 <span>{date}</span>
+                <button onClick={refreshToken}>New token</button>
               </div>
             </div>
           </div>
@@ -99,6 +113,20 @@ const Page = () => {
                   ></FontAwesomeIcon>
                 </>
               ) : null
+              // {
+              //   // if the user is logged in and the user is the owner of the post
+              //   userEmail === post?.email ? (
+              //     <>
+              //       <Link to={`/write?edit=${postId}`}>
+              //         <FontAwesomeIcon icon={faPenToSquare} />
+              //       </Link>
+              //       <FontAwesomeIcon
+              //         icon={faTrashCan}
+              //         onClick={handleDeletePost}
+              //         className="cursor-pointer ml-5"
+              //       ></FontAwesomeIcon>
+              //     </>
+              //   ) : null
             }
           </div>
 

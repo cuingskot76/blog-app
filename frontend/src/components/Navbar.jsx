@@ -62,7 +62,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              {currentUser?.firstName ? (
+              {currentUser ? (
                 <span>Welcome back, {currentUser?.firstName}</span>
               ) : null}
             </li>
@@ -98,10 +98,9 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            {currentUser?.firstName ? (
-              <span>Welcome back,</span>
-            ) : // <span>Welcome back, {firstNameUpper}</span>
-            null}
+            {currentUser ? (
+              <span>Welcome back, {currentUser?.firstName}</span>
+            ) : null}
           </li>
         </ul>
       </div>
