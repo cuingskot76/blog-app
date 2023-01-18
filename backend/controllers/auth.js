@@ -55,35 +55,41 @@ export const login = (req, res) => {
       expiresIn: "1d",
     });
 
+    // refresh_token = from database
+    const { password, refresh_token, ...user } = data[0];
+    const newUser = { ...user, accessToken, refreshToken };
+    // const { password, refresh_token, ...user } = data[0];
+    // const newUser = { ...user, accessToken };
+
     // store the refresh token in the database
     const q = "UPDATE users SET refresh_token = ? WHERE id = ?";
-    db.query(q, [refreshToken, data[0].id], (err, data) => {
+    db.query(q, [newUser.refreshToken, data[0].id], (err, data) => {
       if (err) return res.status(500).json("Something went wrong");
       // res.status(200).json("Successfully store the refresh token");
     });
 
     // get id, firstName, lastName, email, img from the database
-    const { password, refresh_token, ...user } = data[0];
-
+    console.log(newUser.refreshToken);
     res
-      .cookie("refreshTokenKey", refreshToken, {
+      .cookie("accessTokenKey", accessToken, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
         // sameSite: "none",
         // secure: true,
       })
-      .json(user);
+      .status(200)
+      .json(newUser);
   });
 };
 
 export const logout = (req, res) => {
   // delete the refresh token from the database
-  // const q = "UPDATE users SET refresh_token = ? WHERE id = ?";
-  // console.log(req.body.id);
-  // db.query(q, [null, req.userId], (err, data) => {
-  //   if (err) return res.status(500).json("Something went wrong");
-  //   res.status(200).json("Successfully delete the refresh token");
-  // });
+  const q = "UPDATE users SET refresh_token = ?";
+  console.log(req.body.id, req.userId);
+  db.query(q, [null], (err, data) => {
+    if (err) return res.status(500).json("Something went wrong");
+    // res.status(200).json("Successfully delete the refresh token");
+  });
 
   res
     .clearCookie("access_token", {
@@ -91,5 +97,5 @@ export const logout = (req, res) => {
       secure: true,
     })
     .status(200)
-    .json("User has been logged out");
+    .json("User has been logged out and refresh token has been deleted");
 };
