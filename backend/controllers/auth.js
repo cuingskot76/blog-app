@@ -84,7 +84,7 @@ export const logout = (req, res) => {
   });
 
   res
-    .clearCookie("access_token", {
+    .clearCookie("accessTokenKey", {
       sameSite: "none",
       secure: true,
     })

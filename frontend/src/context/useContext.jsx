@@ -21,14 +21,9 @@ export const UseContextProvider = ({ children }) => {
     const res = await axios.post("http://localhost:8000/api/auth/login", input);
     console.log(res.data);
     const { accessToken, refreshToken, id, ...user } = res?.data;
-    // setAccessToken(accessToken);
     setCurrentUser(user);
-    // setUserEmail(email);
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
-    // console.log("access token from login", accessToken);
-    // store user in local storage
-    // localStorage.setItem("user", JSON.stringify(user));
   };
   // console.log("access token from usstate", accessToken);
   const logout = async () => {

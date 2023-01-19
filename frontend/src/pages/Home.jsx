@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../context/useContext";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const cat = useLocation().search;
 
+  const { accessToken } = useContext(AuthContext);
+  // console.log(accessToken);
   useEffect(() => {
     const fetchPosts = async () => {
       try {

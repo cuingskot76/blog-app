@@ -15,10 +15,10 @@ const Page = () => {
   const postId = location.pathname.split("/")[2];
 
   const { currentUser, accessToken, axiosAuth } = useContext(AuthContext);
-  // console.log(currentUser);
   const navigate = useNavigate();
 
   const [token, setToken] = useState("");
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -48,12 +48,11 @@ const Page = () => {
   // get cookie from user when user login
   const handleDeletePost = async () => {
     try {
-      await axiosAuth.delete(`http://localhost:8000/api/posts/${postId}`, {
+      await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      // setPost(res?.data);
       navigate("/");
     } catch (error) {
       console.log(error);
