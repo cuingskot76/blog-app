@@ -42,6 +42,7 @@ export const deletePost = (req, res) => {
 
   // !bener
   const q = "DELETE FROM posts WHERE id = ?";
+  console.log(req.params.id);
 
   db.query(q, [req.params.id], (err, data) => {
     if (err) return res.json(err);

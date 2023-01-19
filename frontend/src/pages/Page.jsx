@@ -18,6 +18,19 @@ const Page = () => {
   const navigate = useNavigate();
 
   const [token, setToken] = useState("");
+  const [cookie, setCookie] = useState("");
+
+  const getCookie = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/auth/cookie");
+      setCookie(res?.data?.accessToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(cookie);
+
+  // console.log(cookie);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -46,13 +59,13 @@ const Page = () => {
   //   : (readTime = getWord * readingSpeed);
 
   // get cookie from user when user login
+  console.log(postId);
   const handleDeletePost = async () => {
     try {
       await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+        withCredentials: true,
       });
+      console.log(postId);
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -92,7 +105,7 @@ const Page = () => {
                 <span className="text-gray-400 mx-2">•</span>
                 {/* <span className="text-gray-400">{`${readTime}`}</span> */}
                 <span>{date}</span>
-                <button onClick={refreshToken}>New token</button>
+                <button onClick={getCookie}>New token</button>
               </div>
             </div>
           </div>

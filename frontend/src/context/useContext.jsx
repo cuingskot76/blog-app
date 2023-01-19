@@ -18,12 +18,16 @@ export const UseContextProvider = ({ children }) => {
   const [refreshToken, setRefreshToken] = useState("");
 
   const login = async (input) => {
-    const res = await axios.post("http://localhost:8000/api/auth/login", input);
-    console.log(res.data);
+    const res = await axios.post(
+      "http://localhost:8000/api/auth/login",
+      input,
+      {
+        withCredentials: true,
+      }
+    );
     const { accessToken, refreshToken, id, ...user } = res?.data;
     setCurrentUser(user);
     setAccessToken(accessToken);
-    setRefreshToken(refreshToken);
   };
   // console.log("access token from usstate", accessToken);
   const logout = async () => {
