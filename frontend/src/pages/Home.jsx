@@ -8,7 +8,7 @@ const Home = () => {
   const cat = useLocation().search;
 
   const { accessToken } = useContext(AuthContext);
-  // console.log(accessToken);
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {

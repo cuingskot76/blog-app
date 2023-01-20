@@ -5,6 +5,7 @@ import postRoutes from "./routes/posts.js";
 import authRoutes from "./routes/auths.js";
 import userRoutes from "./routes/users.js";
 import cookieParser from "cookie-parser";
+import multer from "multer";
 
 const app = express();
 
@@ -28,6 +29,25 @@ app.use(cors(corsOptions));
 
 app.use(cookieParser());
 app.use(express.json());
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../frontend/public/upload");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File uploaded successfully");
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);

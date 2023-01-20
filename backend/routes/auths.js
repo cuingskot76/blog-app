@@ -11,8 +11,4 @@ router.post("/login", login);
 router.post("/logout", verify, logout);
 router.post("/token", refreshToken);
 
-router.get("/cookie", (req, res) => {
-  res.send({ cookie: req.cookies });
-});
-
 export default router;
