@@ -25,7 +25,7 @@ export const getPosts = (req, res) => {
 
 export const getPost = (req, res) => {
   const q =
-    "SELECT writter, title, subTitle, p.img, description, u.email ,u.img AS userImg, cat, p.date FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?";
+    "SELECT p.id, writter, title, subTitle, p.img, description, u.email ,u.img AS userImg, cat, p.date FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?";
 
   // params = id in the url
   db.query(q, [req.params.id], (err, data) => {
@@ -64,4 +64,25 @@ export const deletePost = (req, res) => {
   //     return res.status(200).json("Post deleted");
   //   });
   // });
+};
+
+export const addPost = (req, res) => {
+  // create query with title, subTitle, img, description, cat, date, uid, writter from req.body
+  const q = "INSERT INTO posts SET ?";
+  const post = {
+    title: req.body.title,
+    subTitle: req.body.subTitle,
+    img: req.body.img,
+    description: req.body.description,
+    cat: req.body.cat,
+    date: req.body.date,
+    writter: req.body.writter,
+    uid: req.body.uid,
+  };
+
+  // execute query
+  db.query(q, post, (err, data) => {
+    if (err) return res.json(err);
+    return res.status(200).json("Post added successfully");
+  });
 };

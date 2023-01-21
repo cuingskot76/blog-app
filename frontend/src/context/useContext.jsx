@@ -25,7 +25,8 @@ export const UseContextProvider = ({ children }) => {
         withCredentials: true,
       }
     );
-    const { accessToken, refreshToken, id, ...user } = res?.data;
+    // const { accessToken, refreshToken, id, ...user } = res?.data;
+    const { accessToken, refreshToken, ...user } = res?.data;
     setCurrentUser(user);
     setAccessToken(accessToken);
   };

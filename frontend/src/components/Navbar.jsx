@@ -98,6 +98,11 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
+            <Link to="/write">
+              <span>Write</span>
+            </Link>
+          </li>
+          <li>
             {currentUser?.firstName ? (
               <span>Welcome back,</span>
             ) : // <span>Welcome back, {firstNameUpper}</span>

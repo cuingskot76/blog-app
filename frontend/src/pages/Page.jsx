@@ -3,6 +3,8 @@ import Sidebar from "../components/Sidebar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/useContext";
 import { DateTime } from "luxon";
+import * as luxon from "luxon";
+
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +16,6 @@ const Page = () => {
 
   const { currentUser, accessToken, axiosAuth } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const [token, setToken] = useState("");
 
   useEffect(() => {
@@ -30,9 +31,6 @@ const Page = () => {
     };
     fetchPosts();
   }, [postId]);
-
-  // get date from the post "some time ago" with luxon
-  const date = DateTime.fromISO(post?.date).toRelative();
 
   // console.log(currentUser);
   // get the read time from the post
@@ -69,6 +67,16 @@ const Page = () => {
   //   }
   // };
 
+  // console.log(DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss"));
+  // console.log(luxon.DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss"));
+
+  // const x = DateTime.fromISO().toRelative();
+  // console.log(x);
+  const y = post?.date;
+  // get date from the post and convert it to relative time
+  const date = DateTime.local().minus({ days: 7 });
+  console.log(date.toString());
+
   return (
     <div className="mt-5">
       <div className="flex justify-between">
@@ -90,7 +98,7 @@ const Page = () => {
                 </span>
                 <span className="text-gray-400 mx-2">•</span>
                 {/* <span className="text-gray-400">{`${readTime}`}</span> */}
-                <span>{date}</span>
+                {/* <span>{date}</span> */}
               </div>
             </div>
           </div>
@@ -119,7 +127,8 @@ const Page = () => {
           </div>
           <div className="max-w-[25rem]">
             <img
-              src={post?.img}
+              // src={post?.img}
+              src={`../upload/${post?.img}`}
               alt="hero-img"
               className="w-full rounded-sm my-5 "
             />

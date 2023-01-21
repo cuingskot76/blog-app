@@ -52,7 +52,6 @@ const Home = () => {
   //     read: "4 min read",
   //   },
   // ];
-
   return (
     <div className="">
       <div className="flex flex-col mt-5">
@@ -63,7 +62,7 @@ const Home = () => {
           >
             <div className="max-w-[200px]">
               <img
-                src={page?.img}
+                src={`../upload/${page?.img}`}
                 alt="img-content"
                 className="w-full rounded-sm"
               />
@@ -72,7 +71,7 @@ const Home = () => {
               <div className="flex items-center mb-3">
                 <div className="max-w-[2rem]">
                   <img
-                    src={page?.img}
+                    // src={`../upload/${page?.img}`}
                     alt="user-img"
                     className="rounded-full"
                   />
