@@ -155,91 +155,96 @@ const Write = () => {
   // console.log(title, subTitle, description, file, cat);
 
   return (
-    <div className="my-5">
-      <div>
-        <input
-          type="text"
-          placeholder="Title"
-          className="input min-w-full max-w-xs mb-5"
-          value={title}
-          // name="title"
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          placeholder="sub title"
-          className="input min-w-full max-w-xs mb-5"
-          value={subTitle}
-          // name="subTitle"
-          onChange={(e) => setSubTitle(e.target.value)}
-        />
-      </div>
-      <div className="h-[300px]">
-        {/* <ReactQuill
+    <div className="mt-24 container mx-auto px-2 sm:px-4 py-2.5 font-[poppins]">
+      <div className="flex gap-5 items-center justify-center">
+        <div className="flex flex-1 flex-col">
+          <div>
+            <input
+              type="text"
+              placeholder="Title"
+              className="input min-w-full max-w-xs mb-5 bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              value={title}
+              // name="title"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="sub title"
+              className="input min-w-full max-w-xs mb-5 bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              value={subTitle}
+              // name="subTitle"
+              onChange={(e) => setSubTitle(e.target.value)}
+            />
+          </div>
+          <div className="h-[300px]">
+            {/* <ReactQuill
           value={post.description}
           className="h-full"
           theme="snow"
           name="description"
           onChange={handleChange}
         /> */}
-        <ReactQuill
-          value={description}
-          className="h-full"
-          theme="snow"
-          onChange={setDescription}
-        />
+            <ReactQuill
+              value={description}
+              className="h-full"
+              theme="snow"
+              onChange={setDescription}
+            />
+          </div>
+        </div>
+        <div className="flex flex-initial flex-col">
+          <input
+            type="file"
+            className="file-input file-input-bordered file-input-info w-full max-w-xs mt-20  min-w-full  mb-5 bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+            // onChange={(e) =>
+            //   setPost((prev) => ({ ...prev, file: e.target.files[0] }))
+            // }
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+
+          <h3 className="mt-5">Category</h3>
+
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              value={cat}
+              onChange={(e) => setCat(e.target.value)}
+            >
+              <FormControlLabel
+                value="programming"
+                control={<Radio />}
+                label="programming"
+              />
+              <FormControlLabel
+                value="technology"
+                control={<Radio />}
+                label="technology"
+              />
+              <FormControlLabel
+                value="writing"
+                control={<Radio />}
+                label="writing"
+              />
+              <FormControlLabel
+                value="productivity"
+                control={<Radio />}
+                label="productivity"
+              />
+              <FormControlLabel
+                value="politics"
+                control={<Radio />}
+                label="politics"
+              />
+            </RadioGroup>
+          </FormControl>
+          <button className="btn btn-info mt-5" onClick={() => handleClick()}>
+            Submit
+          </button>
+        </div>
       </div>
-      <button onClick={upload}>CLICK ME</button>
-      <input
-        type="file"
-        className="file-input file-input-bordered file-input-info w-full max-w-xs mt-20"
-        // onChange={(e) =>
-        //   setPost((prev) => ({ ...prev, file: e.target.files[0] }))
-        // }
-        onChange={(e) => setFile(e.target.files[0])}
-      />
-
-      <h3 className="mt-5">Category</h3>
-
-      <FormControl>
-        <RadioGroup
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="controlled-radio-buttons-group"
-          value={cat}
-          onChange={(e) => setCat(e.target.value)}
-        >
-          <FormControlLabel
-            value="programming"
-            control={<Radio />}
-            label="programming"
-          />
-          <FormControlLabel
-            value="technology"
-            control={<Radio />}
-            label="technology"
-          />
-          <FormControlLabel
-            value="writing"
-            control={<Radio />}
-            label="writing"
-          />
-          <FormControlLabel
-            value="productivity"
-            control={<Radio />}
-            label="productivity"
-          />
-          <FormControlLabel
-            value="politics"
-            control={<Radio />}
-            label="politics"
-          />
-        </RadioGroup>
-      </FormControl>
-      <button className="btn btn-info mt-5" onClick={() => handleClick()}>
-        Submit
-      </button>
     </div>
   );
 };

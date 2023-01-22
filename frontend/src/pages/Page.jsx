@@ -9,6 +9,8 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
+import Avatar from "boring-avatars";
+
 const Page = () => {
   const [post, setPost] = useState([]);
   const location = useLocation();
@@ -32,15 +34,11 @@ const Page = () => {
     fetchPosts();
   }, [postId]);
 
-  // console.log(currentUser);
-  // get the read time from the post
-  // let readTime = 0;
-  // const readingSpeed = 200;
-  // const getWord2 = 200;
-  // const getWord = post?.description?.split(" ").length;
-  // getWord < readingSpeed
-  //   ? `${(readTime = getWord / readingSpeed)} sec read `
-  //   : (readTime = getWord * readingSpeed);
+  // get the read time from the post decsription
+  const wordPerMinute = 200;
+  const words = post?.description?.split(" ").length;
+  const minutes = words / wordPerMinute;
+  const readTime = Math.ceil(minutes);
 
   // get cookie from user when user login
 
@@ -67,58 +65,75 @@ const Page = () => {
   //   }
   // };
 
-  // console.log(DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss"));
-  // console.log(luxon.DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss"));
+  // console.log();
 
-  // const x = DateTime.fromISO().toRelative();
-  // console.log(x);
-  const y = post?.date;
-  // get date from the post and convert it to relative time
-  const date = DateTime.local().minus({ days: 7 });
-  console.log(date.toString());
+  // get date with luxon
+  var dt = DateTime.now();
+  var f = { month: "short", day: "numeric", year: "numeric" };
+  const date = dt.setLocale("en-US").toLocaleString(f);
 
   return (
     <div className="mt-5">
       <div className="flex justify-between">
-        <div className="">
-          <div className="flex items-center gap-5">
-            <div className="max-w-[3rem]">
-              <img
-                src={post?.img}
-                alt="user-img"
-                className="rounded-full bg-cover"
-              />
+        <div>
+          <div className="flex items-center gap-7">
+            <div className="max-w-[2rem]">
+              {post?.img ? (
+                <img
+                  src={`../upload/${post?.img}`}
+                  alt="user-img"
+                  className="rounded-full w-[50px]"
+                />
+              ) : (
+                <Avatar
+                  size={50}
+                  name={post?.writter}
+                  variant={"beam" || "marble"}
+                  colors={[
+                    "#92A1C6",
+                    "#146A7C",
+                    "#F0AB3D",
+                    "#C271B4",
+                    "#C20D90",
+                  ]}
+                />
+              )}
             </div>
-            <div className="flex flex-col ">
-              <span className="mb-2">{post?.writter}</span>
+
+            <div className="flex flex-col">
+              <span className="">{post?.writter}</span>
               {/* <span className="mb-2">{post?.firstName}</span> */}
               <div>
                 <span className="text-gray-400">
-                  {/* {DateTime.now().plus(post?.date).toRelativeCalendar()} */}
+                  <span className="text-gray-400 text-[14px]">{date}</span>
                 </span>
                 <span className="text-gray-400 mx-2">•</span>
-                {/* <span className="text-gray-400">{`${readTime}`}</span> */}
+                <span className="text-gray-400 text-[14px]">{`${
+                  readTime === 1
+                    ? `${readTime} min read`
+                    : `${readTime} min read`
+                } `}</span>
                 {/* <span>{date}</span> */}
               </div>
             </div>
-          </div>
 
-          <div>
-            {
-              // if the user is logged in and the user is the owner of the post
-              currentUser?.email === post?.email ? (
-                <>
-                  <Link to={`/write?edit=${postId}`} state={post}>
-                    <FontAwesomeIcon icon={faPenToSquare} />
-                  </Link>
-                  <FontAwesomeIcon
-                    icon={faTrashCan}
-                    onClick={handleDeletePost}
-                    className="cursor-pointer ml-5"
-                  ></FontAwesomeIcon>
-                </>
-              ) : null
-            }
+            <div>
+              {
+                // if the user is logged in and the user is the owner of the post
+                currentUser?.email === post?.email ? (
+                  <>
+                    <Link to={`/write?edit=${postId}`} state={post}>
+                      <FontAwesomeIcon icon={faPenToSquare} />
+                    </Link>
+                    <FontAwesomeIcon
+                      icon={faTrashCan}
+                      onClick={handleDeletePost}
+                      className="cursor-pointer ml-5"
+                    ></FontAwesomeIcon>
+                  </>
+                ) : null
+              }
+            </div>
           </div>
 
           <div className="my-5">

@@ -7,6 +7,7 @@ import {
 
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import NavbarMain from "./components/NavbarMain";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Page from "./pages/Page";
@@ -16,7 +17,8 @@ import Write from "./pages/Write";
 const Layout = () => {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
+      <NavbarMain />
       <Outlet />
       <Footer />
     </>
@@ -54,7 +56,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="h-[2000px] px-[2rem] overflow-x-hidden sm:px-[4rem] ">
+    // <div className="container flex flex-wrap items-center justify-between mx-auto px-2 sm:px-4 py-2.5">
+    //   <RouterProvider router={router} />
+    // </div>
+    <div className="">
       <RouterProvider router={router} />
     </div>
   );

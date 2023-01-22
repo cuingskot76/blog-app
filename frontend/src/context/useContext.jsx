@@ -30,7 +30,7 @@ export const UseContextProvider = ({ children }) => {
     setCurrentUser(user);
     setAccessToken(accessToken);
   };
-  // console.log("access token from usstate", accessToken);
+
   const logout = async () => {
     // await axios.post("http://localhost:8000/api/auth/logout");
     await axios.delete("http://localhost:8000/api/auth/logout");
