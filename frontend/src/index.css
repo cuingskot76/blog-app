@@ -37,7 +37,7 @@
 }
 
 .navbar {
-  background: rgba(231, 227, 227, 0.3);
+  background: rgba(231, 227, 227, 0.5);
   border-bottom: 1px solid white;
   backdrop-filter: blur(10px);
 }

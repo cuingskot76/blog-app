@@ -27,6 +27,7 @@ const Page = () => {
           `http://localhost:8000/api/posts/${postId}`
         );
         setPost(res?.data);
+        console.log(res?.data);
       } catch (error) {
         console.log(error);
       }
@@ -78,7 +79,7 @@ const Page = () => {
         <div>
           <div className="flex items-center gap-7">
             <div className="max-w-[2rem]">
-              {post?.img ? (
+              {post?.userImg ? (
                 <img
                   src={`../upload/${post?.img}`}
                   alt="user-img"

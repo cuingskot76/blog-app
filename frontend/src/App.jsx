@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Page from "./pages/Page";
 import SignUp from "./pages/SignUp";
+import Trending from "./pages/Trending";
 import Write from "./pages/Write";
 
 const Layout = () => {
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: [<Trending />, <Home />],
       },
       {
         path: "/post/:id",

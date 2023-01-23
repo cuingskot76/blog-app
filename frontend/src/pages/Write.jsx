@@ -13,6 +13,7 @@ import FormLabel from "@mui/material/FormLabel";
 import * as luxon from "luxon";
 
 import { AuthContext } from "../context/useContext";
+import UseFileUpload from "../hooks/UseFileUpload";
 
 const Write = () => {
   const state = useLocation().state;
@@ -105,12 +106,11 @@ const Write = () => {
               withCredentials: true,
             }
           );
-      navigate("/");
+      // navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(typeof luxon.DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss"));
   // const updatePost = async (imgUrl) => {
   //   try {
 
@@ -203,6 +203,7 @@ const Write = () => {
             // }
             onChange={(e) => setFile(e.target.files[0])}
           />
+          {/* <UseFileUpload /> */}
 
           <h3 className="mt-5">Category</h3>
 
