@@ -10,7 +10,7 @@ const Trending = () => {
       title:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
       writter: "Johny Doe",
-      date: "Jan 1",
+      date: "Jan 1, 2023",
       read: "5 min read",
     },
     {
@@ -18,14 +18,14 @@ const Trending = () => {
       title:
         "Lorem ipsum dolor sit amet id cursus si ultricies sagittis magna metus",
       writter: "Alex Rou",
-      date: "Jan 15",
+      date: "Jan 15, 2023",
       read: "6 min read",
     },
     {
       id: 3,
       title: "Lorem ipsum dolor sit amet ",
       writter: "Ayanna Lie",
-      date: "Jan 20",
+      date: "Jan 20, 2023",
       read: "3 min read",
     },
     {
@@ -33,14 +33,14 @@ const Trending = () => {
       title:
         "Lorem ipsum etiam volutpat dapibus non arcu malesuada fusce nunc nostra cursus consequat blandit",
       writter: "Laura Lee",
-      date: "Jan 1",
+      date: "Jan 1, 2023",
       read: "5 min read",
     },
     {
       id: 5,
       title: "Lorem ipsum  venenatis erat porta phasellus",
       writter: "Dieggon",
-      date: "Jan 19",
+      date: "Jan 19, 2023",
       read: "8 min read",
     },
     {
@@ -48,13 +48,13 @@ const Trending = () => {
       title:
         "Lorem ipsum dolor sit amet fringilla euismod accumsan sit sollicitudin habitasse libero cubilia dictumst finibus",
       writter: "Marco Polo",
-      date: "Jan 2",
+      date: "Jan 2, 2023",
       read: "5 min read",
     },
   ];
 
   return (
-    <div className="mt-24 mx-[1rem] sm:mx-[48px] lg:mx-[64px]">
+    <div className="mt-24 mx-[1rem] sm:mx-[48px] lg:mx-[64px] xl:mx-[100px] 2xl:mx-[256px]">
       <div className="flex text-center items-center gap-4 mb-7">
         <FontAwesomeIcon icon={faLineChart} />
         <h1 className="font-bold_700">Trending on Akanyz</h1>
@@ -98,11 +98,11 @@ const Trending = () => {
                       : post.title}
                   </h1>
                   <div className="flex items-center gap-4">
-                    <h1 className="text-[13px] text-f_secondary font-bold_700">
+                    <h1 className="text-f_secondary text-[13px]">
                       {post.date}
                     </h1>
                     <span className="text-f_secondary">•</span>
-                    <h1 className="text-[13px] text-f_secondary font-bold_700">
+                    <h1 className="text-f_secondary text-[13px]">
                       {post.read}
                     </h1>
                   </div>
@@ -112,6 +112,7 @@ const Trending = () => {
           )
         }
       </div>
+      <p className="border border-bold_700 w-full my-14"></p>
     </div>
   );
 };

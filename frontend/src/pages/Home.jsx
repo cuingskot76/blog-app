@@ -30,7 +30,7 @@ const Home = () => {
   const date = dt.setLocale("en-US").toLocaleString(f);
 
   return (
-    <div className="mt-24 mx-[1rem] sm:mx-[48px] lg:mx-[64px] xl:mx-[100px]">
+    <div className="mt-24 mx-[1rem] sm:mx-[48px] lg:mx-[64px] xl:mx-[128px] 2xl:mx-[256px]">
       <div className="lg:flex justify-between lg:gap-[99px]">
         <div className="flex flex-col mt-5 xl:flex-auto">
           {posts?.length === 0 ? (
@@ -79,7 +79,7 @@ const Home = () => {
                         />
                       )}
                     </div>
-                    <span className="font-bold_600 text-base ml-2">
+                    <span className="text-base ml-3 font-bold_700">
                       {page?.writter}
                     </span>
                   </div>
@@ -106,7 +106,7 @@ const Home = () => {
                     <div className="hidden sm:inline-block">
                       <span className="text-f_secondary mx-2">•</span>
                       <Link to={`/?cat=${page?.cat}`}>
-                        <p className="inline bg-[#e6e6e6] text-center items-center px-2 py-1 rounded-[100px]">
+                        <p className="inline bg-[#e6e6e6] text-center items-center px-4 pt-1 pb-2 rounded-[100px]">
                           <span className="text-[13px]">{page?.cat}</span>
                         </p>
                       </Link>
@@ -132,8 +132,8 @@ const Home = () => {
               </div>
             ) : (
               <div className="mt-5">
-                <div className="grid grid-cols-2 w-fit gap-2">
-                  {posts?.map((cat, i) => (
+                <div className="max-w-[250px]">
+                  {/* {posts?.map((cat, i) => (
                     <Link to={`/?cat=${cat?.cat}`} key={i}>
                       <div className="border border-bold_700 py-2 px-4">
                         <p className="text-sm font-[poppins] text-f_secondary">
@@ -141,7 +141,54 @@ const Home = () => {
                         </p>
                       </div>
                     </Link>
-                  ))}
+                  ))} */}
+                  <div className="flex flex-wrap gap-5 ">
+                    <Link to={`/?cat=programming`}>
+                      <p className="text-sm font-[poppins] text-f_secondary">
+                        Programming
+                      </p>
+                    </Link>
+                    <Link to={`/?cat=data-science`}>
+                      <p className="text-sm font-[poppins] text-f_secondary">
+                        Data Science
+                      </p>
+                    </Link>
+                    <Link to={`/?cat=technology`}>
+                      <p className="text-sm font-[poppins] text-f_secondary">
+                        Technology
+                      </p>
+                    </Link>
+                    <Link to={`/?cat=self-improvement`}>
+                      <p className="text-sm font-[poppins] text-f_secondary">
+                        Self Improvement
+                      </p>
+                    </Link>
+                    <Link to={`/?cat=writing`}>
+                      <p className="text-sm font-[poppins] text-f_secondary">
+                        Writing
+                      </p>
+                    </Link>
+                    <Link to={`/?cat=relationships`}>
+                      <p className="text-sm font-[poppins] text-f_secondary">
+                        Relationships
+                      </p>
+                    </Link>
+                    <Link to={`/?cat=machine-learning`}>
+                      <p className="text-sm font-[poppins] text-f_secondary">
+                        Machine Learning
+                      </p>
+                    </Link>
+                    <Link to={`/?cat=politics`}>
+                      <p className="text-sm font-[poppins] text-f_secondary">
+                        Politics
+                      </p>
+                    </Link>
+                    <Link to={`/?cat=productivity`}>
+                      <p className="text-sm font-[poppins] text-f_secondary">
+                        Productivity
+                      </p>
+                    </Link>
+                  </div>
                 </div>
                 <p className="border border-bold_700 my-7"></p>
                 <div className="max-w-[250px] xl:max-w-full">

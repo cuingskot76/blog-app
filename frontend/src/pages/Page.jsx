@@ -74,7 +74,7 @@ const Page = () => {
   const date = dt.setLocale("en-US").toLocaleString(f);
 
   return (
-    <div className="mt-5">
+    <div className="mt-24 mx-[1rem] sm:mx-[48px] lg:mx-[64px] xl:mx-[128px] 2xl:mx-[256px]">
       <div className="flex justify-between">
         <div>
           <div className="flex items-center gap-7">
