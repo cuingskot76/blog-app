@@ -42,7 +42,7 @@ export const deletePost = (req, res) => {
 
   // !bener
   const q = "DELETE FROM posts WHERE id = ?";
-  console.log(req.params.id);
+  // console.log(req.params.id);
 
   db.query(q, [req.params.id], (err, data) => {
     if (err) return res.json(err);
@@ -82,7 +82,52 @@ export const addPost = (req, res) => {
 
   // execute query
   db.query(q, post, (err, data) => {
-    if (err) return res.json(err);
+    if (err) return res.status(403).json("Post not added");
     return res.status(200).json("Post added successfully");
   });
+};
+
+export const updatePost = (req, res) => {
+  const token = req.cookies.accessTokenKey;
+  // console.log(token);
+  if (!token) return res.status(401).json("You are not authenticated");
+
+  jwt.verify(token, "accessTokenKey", (err, user) => {
+    if (err) return res.status(403).json("Token is not valid");
+    const postId = req.params.id;
+    const userId = user?.id;
+    const q =
+      "UPDATE posts SET title=?, subTitle=?, img=?, description=?, cat=? WHERE id = ? AND uid = ?";
+    const values = [
+      req.body.title,
+      req.body.subTitle,
+      req.body.img,
+      req.body.description,
+      req.body.cat,
+      postId,
+      userId,
+    ];
+    db.query(q, values, (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("Post has been updated");
+    });
+  });
+
+  // !bener
+  // const postId = req.params.id;
+  // const q =
+  //   "UPDATE posts SET title=?, subTitle=?, img=?, description=?, cat=? WHERE id = ?";
+  // const values = [
+  //   req.body.title,
+  //   req.body.subTitle,
+  //   req.body.img,
+  //   req.body.description,
+  //   req.body.cat,
+  //   postId,
+  // ];
+  // db.query(q, values, (err, data) => {
+  //   console.log(err);
+  //   if (err) return res.status(403).json("Post not updated");
+  //   return res.status(200).json("Post updated successfully");
+  // });
 };

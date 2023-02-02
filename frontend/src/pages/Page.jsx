@@ -48,7 +48,7 @@ const Page = () => {
       await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
         withCredentials: true,
       });
-      console.log(postId);
+      // console.log(postId);
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -72,6 +72,12 @@ const Page = () => {
   var dt = DateTime.now();
   var f = { month: "short", day: "numeric", year: "numeric" };
   const date = dt.setLocale("en-US").toLocaleString(f);
+
+  // convert from html to text
+  const htmlToText = (html) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  };
 
   return (
     <div className="mt-24 mx-[1rem] sm:mx-[48px] lg:mx-[64px] xl:mx-[128px] 2xl:mx-[256px]">
@@ -149,7 +155,7 @@ const Page = () => {
               className="w-full rounded-sm my-5 "
             />
           </div>
-          <p className="max-w-md">{post?.description}</p>
+          <p className="max-w-md">{htmlToText(post?.description)}</p>
           {post?.cat ? (
             <p className="bg-blue-400 w-fit rounded-md py-1 px-2 mt-5">
               {post?.cat}

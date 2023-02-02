@@ -73,7 +73,7 @@ const Write = () => {
     try {
       const imgUrl = await upload();
       // console.log(imgUrl);
-      state
+      const res = (await state)
         ? await axios.put(
             `http://localhost:8000/api/posts/${state.id}`,
             {
@@ -106,6 +106,7 @@ const Write = () => {
               withCredentials: true,
             }
           );
+      console.log(res.data);
       // navigate("/");
     } catch (error) {
       console.log(error);

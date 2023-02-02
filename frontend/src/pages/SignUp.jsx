@@ -89,7 +89,6 @@ const SignUp = () => {
           </g>
         </svg>
         <h3 className="text-xl text-center mb-10 ">Register to our platform</h3>
-        {/* <p className="text-red-500 text-center mb-5 font-bold_700 ">{error}</p> */}
         <p className="mb-5 text-center text-red-700">{error}</p>
         <form onSubmit={handleSubmit}>
           <div className="grid md:grid-cols-2 md:gap-6">

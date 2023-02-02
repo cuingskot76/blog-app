@@ -5,7 +5,6 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const UseContextProvider = ({ children }) => {
-  // const [currentUser, setCurrentUser] = useState();
   // store user in local storage
   const [currentUser, setCurrentUser] = useState(
     localStorage.getItem("user")
@@ -13,7 +12,6 @@ export const UseContextProvider = ({ children }) => {
       : null
   );
 
-  // const [userEmail, setUserEmail] = useState(null);
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
 
@@ -32,7 +30,6 @@ export const UseContextProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    // await axios.post("http://localhost:8000/api/auth/logout");
     await axios.delete("http://localhost:8000/api/auth/logout");
     setCurrentUser(null);
   };
