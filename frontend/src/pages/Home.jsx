@@ -10,7 +10,9 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const cat = useLocation().search;
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, accessToken } = useContext(AuthContext);
+
+  console.log(accessToken);
 
   useEffect(() => {
     const fetchPosts = async () => {
