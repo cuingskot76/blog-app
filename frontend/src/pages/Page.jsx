@@ -18,7 +18,6 @@ const Page = () => {
 
   const { currentUser, accessToken, axiosAuth } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [token, setToken] = useState("");
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -27,7 +26,6 @@ const Page = () => {
           `http://localhost:8000/api/posts/${postId}`
         );
         setPost(res?.data);
-        console.log(res?.data);
       } catch (error) {
         console.log(error);
       }
@@ -45,10 +43,15 @@ const Page = () => {
 
   const handleDeletePost = async () => {
     try {
+      // await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
+      //   withCredentials: true,
+      // });
       await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
         withCredentials: true,
       });
-      // console.log(postId);
       navigate("/");
     } catch (error) {
       console.log(error);

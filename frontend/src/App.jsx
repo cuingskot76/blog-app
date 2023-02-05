@@ -7,7 +7,6 @@ import {
 
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import NavbarMain from "./components/NavbarMain";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Page from "./pages/Page";
@@ -18,8 +17,7 @@ import Write from "./pages/Write";
 const Layout = () => {
   return (
     <>
-      {/* <Navbar /> */}
-      <NavbarMain />
+      <Navbar />
       <Outlet />
       <Footer />
     </>

@@ -3,30 +3,29 @@ import jwt from "jsonwebtoken";
 
 export const refreshToken = async (req, res) => {
   try {
-    // const refreshToken = req.cookies.accessTokenKey;
-
-    // ambil refresh token dari body
-    const refreshToken = req.body.token;
+    const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) return res.status(401).json("Unauthorized");
 
     // compare the refresh token with the one in the database
     const q = "SELECT * FROM users WHERE refresh_token = ?";
     db.query(q, [refreshToken], (err, data) => {
-      if (err) return res.json(err);
-      if (!data.length) return res.status(403).json("Forbidden");
+      if (err) return res.status(403).json("Forbidden");
 
       // verify the refresh token
       jwt.verify(refreshToken, "refreshTokenKey", (err, decoded) => {
-        if (err) return res.status(403).json("Forbidden");
+        if (err) return res.status(403).json("Token is not valid");
 
         // get the user id, firstName, email from the decoded refresh token
         const userId = decoded.id;
-        const firstName = decoded.firstName;
-        const email = decoded.email;
+        const userFirstName = decoded.firstName;
 
         // create a new access token
         const accessToken = jwt.sign(
-          { userId, firstName, email },
+          {
+            id: decoded.id,
+            email: decoded.email,
+            firstName: decoded.firstName,
+          },
           "accessTokenKey",
           {
             expiresIn: "20s",

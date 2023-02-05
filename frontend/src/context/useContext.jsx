@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-// import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 export const AuthContext = createContext();
 
@@ -13,7 +13,9 @@ export const UseContextProvider = ({ children }) => {
   );
 
   const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
+  const [token, setToken] = useState("");
+  const [decodedToken, setDecodedToken] = useState("");
+  const [username, setUsername] = useState("");
 
   const login = async (input) => {
     const res = await axios.post(
@@ -30,22 +32,40 @@ export const UseContextProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await axios.delete("http://localhost:8000/api/auth/logout");
+    await axios.delete("http://localhost:8000/api/auth/logout", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
     setCurrentUser(null);
   };
 
-  const generateNewRefreshToken = async () => {
+  const refreshToken = async () => {
     try {
-      const res = await axios.post(`http://localhost:8000/api/auth/token`, {
-        token: refreshToken,
+      const res = await axios.get("http://localhost:8000/api/auth/token", {
+        withCredentials: true,
       });
-      console.log(res);
-      setAccessToken(res?.data?.accessToken);
-      return res?.data;
+      setToken(res?.data?.accessToken);
+      const decoded = jwt_decode(res?.data?.accessToken);
+      setDecodedToken(decoded);
+      setUsername(decoded?.username);
     } catch (error) {
       console.log(error);
     }
   };
+
+  // const generateNewRefreshToken = async () => {
+  //   try {
+  //     const res = await axios.post(`http://localhost:8000/api/auth/token`, {
+  //       token: refreshToken,
+  //     });
+  //     setAccessToken(res?.data?.accessToken);
+  //     return res?.data;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // create axios interceptor to refresh token
   // axios.interceptors.response.use(
@@ -75,23 +95,23 @@ export const UseContextProvider = ({ children }) => {
   //   }
   // );
 
-  const axiosAuth = axios.create();
+  // const axiosAuth = axios.create();
 
-  axiosAuth.interceptors.response.use(
-    async (config) => {
-      let currentDate = new Date();
-      const decodedToken = jwt_decode(accessToken);
-      if (decodedToken.exp * 1000 < currentDate.getTime()) {
-        const data = await generateNewRefreshToken();
-        config.headers["Authorization"] = `Bearer ${data.accessToken}`;
-      }
-      return config;
-    },
-    (error) => {
-      // if an error, we want to reject the Promise and return the error
-      return Promise.reject(error);
-    }
-  );
+  // axiosAuth.interceptors.response.use(
+  //   async (config) => {
+  //     let currentDate = new Date();
+  //     const decodedToken = jwt_decode(accessToken);
+  //     if (decodedToken.exp * 1000 < currentDate.getTime()) {
+  //       const data = await generateNewRefreshToken();
+  //       config.headers["Authorization"] = `Bearer ${data.accessToken}`;
+  //     }
+  //     return config;
+  //   },
+  //   (error) => {
+  //     // if an error, we want to reject the Promise and return the error
+  //     return Promise.reject(error);
+  //   }
+  // );
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
@@ -106,8 +126,10 @@ export const UseContextProvider = ({ children }) => {
         refreshToken,
         login,
         logout,
-        generateNewRefreshToken,
-        axiosAuth,
+        decodedToken,
+        username,
+        // generateNewRefreshToken,
+        // axiosAuth,
       }}
     >
       {children}

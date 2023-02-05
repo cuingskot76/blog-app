@@ -10,9 +10,7 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const cat = useLocation().search;
 
-  const { currentUser, accessToken } = useContext(AuthContext);
-
-  console.log(accessToken);
+  const { currentUser, accessToken, refreshToken } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -25,6 +23,8 @@ const Home = () => {
     };
     fetchPosts();
   }, [cat]);
+
+  // refreshToken();
 
   // get date with luxon
   var dt = DateTime.now();

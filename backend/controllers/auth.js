@@ -46,48 +46,52 @@ export const login = (req, res) => {
 
     if (!validPassword) return res.status(401).json("Invalid password");
 
-    const accessToken = jwt.sign({ id: data[0].id }, "accessTokenKey", {
-      expiresIn: "20s",
-    });
+    const accessToken = jwt.sign(
+      { id: data[0].id, email: data[0].email, firstName: data[0].firstName },
+      "accessTokenKey",
+      {
+        expiresIn: "20s",
+      }
+    );
 
-    const refreshToken = jwt.sign({ id: data[0].id }, "refreshTokenKey", {
-      expiresIn: "1d",
-    });
-
-    // refresh_token = from database
-    const { password, refresh_token, ...user } = data[0];
-    const newUser = { ...user, accessToken, refreshToken };
+    const refreshToken = jwt.sign(
+      { id: data[0].id, email: data[0].email, firstName: data[0].firstName },
+      "refreshTokenKey",
+      {
+        expiresIn: "1d",
+      }
+    );
 
     // store the refresh token in the database
     const q = "UPDATE users SET refresh_token = ? WHERE id = ?";
-    db.query(q, [newUser.refreshToken, data[0].id], (err, data) => {
+    db.query(q, [refreshToken, data[0].id], (err, data) => {
       if (err) return res.status(500).json("Something went wrong");
     });
 
     res
-      .cookie("accessTokenKey", accessToken, {
+      .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
       })
       .status(200)
-      .json(newUser);
+      .json({ accessToken });
   });
 };
 
 export const logout = (req, res) => {
-  // delete the refresh token from the database
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) return res.status(401).json("Unauthorized");
+
   const q = "UPDATE users SET refresh_token = ?";
-  // console.log(req.body.id, req.userId);
   db.query(q, [null], (err, data) => {
     if (err) return res.status(500).json("Something went wrong");
-    // res.status(200).json("Successfully delete the refresh token");
-  });
 
-  res
-    .clearCookie("accessTokenKey", {
-      sameSite: "none",
-      secure: true,
-    })
-    .status(200)
-    .json("User has been logged out and refresh token has been deleted");
+    // clear the cookies
+    res
+      .clearCookie("refreshToken", {
+        sameSite: "none",
+      })
+      .status(200)
+      .json("User has been logged out and refresh token has been deleted");
+  });
 };

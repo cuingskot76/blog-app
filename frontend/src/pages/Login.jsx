@@ -1,15 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { AuthContext } from "../context/useContext";
-
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -33,11 +24,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const res = await axios.post(
-      //   "http://localhost:8000/api/auth/login",
-      //   user
-      // );
-      // with useContext
       await login(user);
       navigate("/");
     } catch (error) {

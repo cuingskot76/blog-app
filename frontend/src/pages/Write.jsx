@@ -2,29 +2,19 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 
 import * as luxon from "luxon";
 
 import { AuthContext } from "../context/useContext";
-import UseFileUpload from "../hooks/UseFileUpload";
 
 const Write = () => {
   const state = useLocation().state;
-
-  // const [post, setPost] = useState({
-  //   title: state ? state.title : "",
-  //   subTitle: state ? state.subTitle : "",
-  //   description: state ? state.description : "",
-  //   file: null,
-  //   cat: state ? state.cat?.toLowerCase() : "",
-  // });
 
   const [title, setTitle] = useState(state?.title || "");
   const [subTitle, setSubTitle] = useState(state?.subTitle || "");
@@ -32,28 +22,7 @@ const Write = () => {
   const [file, setFile] = useState(null);
   const [cat, setCat] = useState(state?.cat || "");
 
-  const [rquill, setRquill] = useState("");
-
   const { currentUser } = useContext(AuthContext);
-
-  const navigate = useNavigate();
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setPost((prev) => ({
-  //     ...prev,
-  //     [e.target?.name]: e.target?.value,
-  //   }));
-
-  //   // setPost((prev) => {
-  //   //   const prop = e.target?.name;
-  //   //   if (prev[prop] !== e.target?.value) {
-  //   //     return { ...prev, [prop]: e.target?.value };
-  //   //   } else {
-  //   //     return prev;
-  //   //   }
-  //   // });
-  // };
 
   const upload = async () => {
     try {
@@ -72,7 +41,6 @@ const Write = () => {
   const handleClick = async () => {
     try {
       const imgUrl = await upload();
-      // console.log(imgUrl);
       const res = (await state)
         ? await axios.put(
             `http://localhost:8000/api/posts/${state.id}`,
@@ -100,60 +68,16 @@ const Write = () => {
               writter: currentUser?.firstName,
               uid: currentUser?.id,
               date: luxon.DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss"),
-              // date: luxon.DateTime.fromISO(post?.date).toRelative()
             },
             {
               withCredentials: true,
             }
           );
       console.log(res.data);
-      // navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
-  // const updatePost = async (imgUrl) => {
-  //   try {
-
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const createPost = async (imgUrl) => {
-  //   try {
-  //     await axios.post(
-  //       "http://localhost:8000/api/posts",
-  //       {
-  //         title: post.title,
-  //         subTitle: post.subTitle,
-  //         description: rquill,
-  //         cat: post.cat,
-  //         img: post?.file ? imgUrl : "",
-  //         writter: currentUser?.firstName,
-  //         uid: currentUser?.id,
-  //         // get the current date and time with luxon
-  //         // date: DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss"),
-  //       },
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // console.log(post);
-
-  // const [radio, setRadio] = useState("");
-
-  // const handleRadioButton = (event) => {
-  //   setRadio(event.target.value);
-  // };
-
-  // console.log(title, subTitle, description, file, cat);
 
   return (
     <div className="mt-24 container mx-auto px-2 sm:px-4 py-2.5 font-[poppins]">
@@ -165,7 +89,6 @@ const Write = () => {
               placeholder="Title"
               className="input min-w-full max-w-xs mb-5 bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               value={title}
-              // name="title"
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
@@ -175,18 +98,10 @@ const Write = () => {
               placeholder="sub title"
               className="input min-w-full max-w-xs mb-5 bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               value={subTitle}
-              // name="subTitle"
               onChange={(e) => setSubTitle(e.target.value)}
             />
           </div>
           <div className="h-[300px]">
-            {/* <ReactQuill
-          value={post.description}
-          className="h-full"
-          theme="snow"
-          name="description"
-          onChange={handleChange}
-        /> */}
             <ReactQuill
               value={description}
               className="h-full"
@@ -199,15 +114,9 @@ const Write = () => {
           <input
             type="file"
             className="file-input file-input-bordered file-input-info w-full max-w-xs mt-20  min-w-full  mb-5 bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-            // onChange={(e) =>
-            //   setPost((prev) => ({ ...prev, file: e.target.files[0] }))
-            // }
             onChange={(e) => setFile(e.target.files[0])}
           />
-          {/* <UseFileUpload /> */}
-
           <h3 className="mt-5">Category</h3>
-
           <FormControl>
             <RadioGroup
               aria-labelledby="demo-controlled-radio-buttons-group"

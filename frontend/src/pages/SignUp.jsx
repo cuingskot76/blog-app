@@ -37,7 +37,6 @@ const SignUp = () => {
   };
 
   return (
-    // <div className="mt-20">
     <div className="mt-24 max-w-md m-auto bg-[#f2f2f2] py-2 px-10 rounded-md">
       <div className="px-6 py-20 lg:px-8">
         <svg
