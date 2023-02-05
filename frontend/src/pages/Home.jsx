@@ -10,7 +10,7 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const cat = useLocation().search;
 
-  const { currentUser, accessToken, refreshToken } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -23,8 +23,6 @@ const Home = () => {
     };
     fetchPosts();
   }, [cat]);
-
-  // refreshToken();
 
   // get date with luxon
   var dt = DateTime.now();
@@ -47,7 +45,7 @@ const Home = () => {
           ) : (
             posts?.map((page, i) => (
               <div
-                key={i}
+                key={page + i}
                 className={`flex flex-row-reverse items-center gap-5 justify-between mb-12 `}
               >
                 <div className="max-w-[150px] sm:max-w-[200px] bg-cover">
@@ -135,15 +133,6 @@ const Home = () => {
             ) : (
               <div className="mt-5">
                 <div className="max-w-[250px]">
-                  {/* {posts?.map((cat, i) => (
-                    <Link to={`/?cat=${cat?.cat}`} key={i}>
-                      <div className="border border-bold_700 py-2 px-4">
-                        <p className="text-sm font-[poppins] text-f_secondary">
-                          {cat?.cat}
-                        </p>
-                      </div>
-                    </Link>
-                  ))} */}
                   <div className="flex flex-wrap gap-5 ">
                     <Link to={`/?cat=programming`}>
                       <p className="text-sm font-[poppins] text-f_secondary">

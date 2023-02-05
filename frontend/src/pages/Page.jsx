@@ -16,7 +16,7 @@ const Page = () => {
   const location = useLocation();
   const postId = location.pathname.split("/")[2];
 
-  const { currentUser, accessToken, axiosAuth } = useContext(AuthContext);
+  const { currentUser, accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,9 +43,6 @@ const Page = () => {
 
   const handleDeletePost = async () => {
     try {
-      // await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
-      //   withCredentials: true,
-      // });
       await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -57,19 +54,6 @@ const Page = () => {
       console.log(error);
     }
   };
-
-  // const refreshToken = async () => {
-  //   try {
-  //     const res = await axios.get("http://localhost:8000/api/auth/token");
-  //     setToken(res?.data?.accessToken);
-  //     const decoded = jwt_decode(res?.data?.accessToken);
-  //     console.log(res);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // console.log();
 
   // get date with luxon
   var dt = DateTime.now();
@@ -112,7 +96,6 @@ const Page = () => {
 
             <div className="flex flex-col">
               <span className="">{post?.writter}</span>
-              {/* <span className="mb-2">{post?.firstName}</span> */}
               <div>
                 <span className="text-gray-400">
                   <span className="text-gray-400 text-[14px]">{date}</span>
@@ -123,7 +106,6 @@ const Page = () => {
                     ? `${readTime} min read`
                     : `${readTime} min read`
                 } `}</span>
-                {/* <span>{date}</span> */}
               </div>
             </div>
 
@@ -152,7 +134,6 @@ const Page = () => {
           </div>
           <div className="max-w-[25rem]">
             <img
-              // src={post?.img}
               src={`../upload/${post?.img}`}
               alt="hero-img"
               className="w-full rounded-sm my-5 "

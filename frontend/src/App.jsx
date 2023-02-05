@@ -1,9 +1,4 @@
-import {
-  createBrowserRouter,
-  Outlet,
-  Route,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -55,9 +50,6 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    // <div className="container flex flex-wrap items-center justify-between mx-auto px-2 sm:px-4 py-2.5">
-    //   <RouterProvider router={router} />
-    // </div>
     <div className="">
       <RouterProvider router={router} />
     </div>

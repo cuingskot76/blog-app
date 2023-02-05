@@ -60,57 +60,48 @@ const Trending = () => {
         <h1 className="font-bold_700">Trending on Akanyz</h1>
       </div>
       <div className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6">
-        {
-          // Post Trending
-          postTrending.length === 0 ? (
-            <div className="text-center mt-10">
-              <h1 className="text-lg font-bold_700">No Post Trending</h1>
-            </div>
-          ) : (
-            postTrending.map((post, i) => (
-              <div className="flex gap-4 mb-6 md:mb-0">
-                <div className="">
-                  <h1 className="text-3xl text-[#e6e6e6] font-bold_700">{`0${
-                    i + 1
-                  }`}</h1>
+        {postTrending.length === 0 ? (
+          <div className="text-center mt-10">
+            <h1 className="text-lg font-bold_700">No Post Trending</h1>
+          </div>
+        ) : (
+          postTrending?.map((post, i) => (
+            <div key={post + i} className="flex gap-4 mb-6 md:mb-0">
+              <div className="">
+                <h1 className="text-3xl text-[#e6e6e6] font-bold_700">{`0${
+                  i + 1
+                }`}</h1>
+              </div>
+              <div className="">
+                <div className="flex text-center items-center gap-3">
+                  <Avatar
+                    size={28}
+                    name={post?.writter}
+                    variant={"beam" || "marble"}
+                    colors={[
+                      "#92A1C6",
+                      "#146A7C",
+                      "#F0AB3D",
+                      "#C271B4",
+                      "#C20D90",
+                    ]}
+                  />
+                  <h1 className="text-[13px] font-bold_700">{post.writter}</h1>
                 </div>
-                <div className="">
-                  <div className="flex text-center items-center gap-3">
-                    <Avatar
-                      size={28}
-                      name={post?.writter}
-                      variant={"beam" || "marble"}
-                      colors={[
-                        "#92A1C6",
-                        "#146A7C",
-                        "#F0AB3D",
-                        "#C271B4",
-                        "#C20D90",
-                      ]}
-                    />
-                    <h1 className="text-[13px] font-bold_700">
-                      {post.writter}
-                    </h1>
-                  </div>
-                  <h1 className="text-base font-bold_700 my-2">
-                    {post.title.length > 100
-                      ? `${post.title.slice(0, 100)} ...`
-                      : post.title}
-                  </h1>
-                  <div className="flex items-center gap-4">
-                    <h1 className="text-f_secondary text-[13px]">
-                      {post.date}
-                    </h1>
-                    <span className="text-f_secondary">•</span>
-                    <h1 className="text-f_secondary text-[13px]">
-                      {post.read}
-                    </h1>
-                  </div>
+                <h1 className="text-base font-bold_700 my-2">
+                  {post.title.length > 100
+                    ? `${post.title.slice(0, 100)} ...`
+                    : post.title}
+                </h1>
+                <div className="flex items-center gap-4">
+                  <h1 className="text-f_secondary text-[13px]">{post.date}</h1>
+                  <span className="text-f_secondary">•</span>
+                  <h1 className="text-f_secondary text-[13px]">{post.read}</h1>
                 </div>
               </div>
-            ))
-          )
-        }
+            </div>
+          ))
+        )}
       </div>
       <p className="border border-bold_700 w-full my-14"></p>
     </div>

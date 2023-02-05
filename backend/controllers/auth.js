@@ -68,18 +68,17 @@ export const login = (req, res) => {
       if (err) return res.status(500).json("Something went wrong");
     });
 
-    res
-      .cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000,
-      })
-      .status(200)
-      .json({ accessToken });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+    res.status(200).json({ accessToken });
   });
 };
 
 export const logout = (req, res) => {
   const refreshToken = req.cookies.refreshToken;
+  console.log(refreshToken);
   if (!refreshToken) return res.status(401).json("Unauthorized");
 
   const q = "UPDATE users SET refresh_token = ?";
@@ -88,9 +87,7 @@ export const logout = (req, res) => {
 
     // clear the cookies
     res
-      .clearCookie("refreshToken", {
-        sameSite: "none",
-      })
+      .clearCookie("refreshToken")
       .status(200)
       .json("User has been logged out and refresh token has been deleted");
   });

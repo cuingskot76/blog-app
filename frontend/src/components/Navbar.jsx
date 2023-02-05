@@ -4,14 +4,10 @@ import { useWindowScroll } from "react-use";
 
 import Slide from "@mui/material/Slide";
 import { AuthContext } from "../context/useContext";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
 
 const NavbarMain = () => {
   const [navBgChange, setNavBgChange] = useState("");
   const { y } = useWindowScroll();
-
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (y > 70) {
@@ -35,25 +31,7 @@ const NavbarMain = () => {
     setOpen(false);
   };
 
-  const { logout } = useContext(AuthContext);
-
-  const [currentUser, setCurrentUser] = useState("");
-
-  const refreshToken = async () => {
-    try {
-      const res = await axios.get("http://localhost:8000/api/auth/token", {
-        withCredentials: true,
-      });
-      const decoded = jwt_decode(res?.data?.accessToken);
-      setCurrentUser(decoded);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    refreshToken();
-  }, []);
+  const { logout, currentUser } = useContext(AuthContext);
 
   return (
     <nav

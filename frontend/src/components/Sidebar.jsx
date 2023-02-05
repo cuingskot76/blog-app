@@ -1,7 +1,6 @@
 import React from "react";
 
 const Sidebar = ({ img, userDesc, followers, writter }) => {
-  // create total follower if it is more than 1 to "followers" else "follower"
   const totalFollower = [];
 
   if (followers > 1000) {
@@ -62,7 +61,7 @@ const Sidebar = ({ img, userDesc, followers, writter }) => {
         <h2 className="font-bold text-xl my-5">Other Posts you may like</h2>
         {pages.map((page, i) => (
           <div
-            key={i}
+            key={page + i}
             className={`flex flex-row-reverse items-center gap-5 justify-between md:justify-evenly mb-10`}
           >
             <div className="max-w-[200px]">
